@@ -1,0 +1,18 @@
+<CATALOG>
+  <MOBILE>
+    <company>Samsung</company>
+    <model>Galaxy S21</model>
+    <price>799.99</price>
+  </MOBILE>
+  <MOBILE>
+    <company>Apple</company>
+    <model>iPhone 13</model>
+    <price>999.99</price>
+  </MOBILE>
+  <MOBILE>
+    <company>OnePlus</company>
+    <model>9 Pro</model>
+    <price>899.99</price>
+  </MOBILE>
+</CATALOG>
+

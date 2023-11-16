@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .sitdown {
+            color: green;
+        }
+
+        .bar {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="teal-text">Restaurant Data</h1>
+        <table class="highlight">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody id="restaurantTable"></tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadDoc();
+        });
+
+        function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myFunction(this);
+                }
+            };
+            xhttp.open("GET", "restaurants.xml", true);
+            xhttp.send();
+        }
+
+        function myFunction(xml) {
+            var i;
+            var xmlDoc = xml.responseXML;
+            var restaurantTable = document.getElementById('restaurantTable');
+            var restaurants = xmlDoc.getElementsByTagName("restaurant");
+
+            for (i = 0; i < restaurants.length; i++) {
+                var restaurant = restaurants[i];
+                var row = restaurantTable.insertRow(i);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+
+                cell1.innerHTML = restaurant.getAttribute("name");
+                cell2.innerHTML = restaurant.getAttribute("address");
+                cell3.innerHTML = restaurant.getAttribute("lat");
+                cell4.innerHTML = restaurant.getAttribute("lng");
+                cell5.innerHTML = restaurant.getAttribute("type");
+
+                // Change text color based on restaurant type
+                if (restaurant.getAttribute("type") === "sitdown") {
+                    row.classList.add("sitdown");
+                } else if (restaurant.getAttribute("type") === "bar") {
+                    row.classList.add("bar");
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

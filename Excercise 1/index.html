@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Mobile Catalog</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body class="container">
+
+  <h1 class="teal-text">Mobile Details</h1>
+
+  <button class="btn waves-effect waves-light" type="button" onclick="loadDoc()">Show Details</button>
+  <br><br>
+
+  <table class="striped">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Model</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody id="mobileDetails"></tbody>
+  </table>
+
+  <script>
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          myFunction(this);
+        }
+      };
+      xhttp.open("GET", "mobiles.xml", true);
+      xhttp.send();
+    }
+
+    function myFunction(xml) {
+      var i;
+      var xmlDoc = xml.responseXML;
+      var tableBody = document.getElementById('mobileDetails');
+      tableBody.innerHTML = ""; // Clear previous content
+
+      var x = xmlDoc.getElementsByTagName("MOBILE");
+      for (i = 0; i < x.length; i++) {
+        var row = tableBody.insertRow(i);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = x[i].getElementsByTagName("company")[0].childNodes[0].nodeValue;
+        cell2.innerHTML = x[i].getElementsByTagName("model")[0].childNodes[0].nodeValue;
+        cell3.innerHTML = "$" + x[i].getElementsByTagName("price")[0].childNodes[0].nodeValue;
+
+        // You can add additional styling based on the data if needed
+      }
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+
+</html>
